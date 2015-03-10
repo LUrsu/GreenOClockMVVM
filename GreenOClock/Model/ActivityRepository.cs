@@ -1,0 +1,41 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Objects.DataClasses;
+using System.Linq;
+using System.Text;
+using NexRepository;
+
+namespace GreenOClock.Model
+{
+    public class ActivityRepository : Repository<GreenOClockEntities, Activity>, IActivityRepository
+    {
+        public ActivityRepository(GreenOClockEntities context) : base(context)
+        {
+        }
+
+        public void AddActivity(Activity addedActivity)
+        {
+            Save(addedActivity);
+            //DataLayer.Instance.UsersActivitiesRepository.Add
+        }
+
+        public void AddStartStopTimeToActivity(Activity activity, DateTime time)
+        {
+            if (activity.StartTime == null)
+                activity.StartTime = time;
+            else
+                activity.EndTime = time;
+            Save(activity);
+        }
+
+        public void RemoveActivity(Activity activity)
+        {
+            Delete(activity);
+        }
+
+        public void SetTotalTime(Activity activity, int totalTime)
+        {
+            activity.TotalTime = totalTime;
+        }
+    }
+}

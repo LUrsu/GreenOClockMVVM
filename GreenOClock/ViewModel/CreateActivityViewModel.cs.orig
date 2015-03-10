@@ -1,0 +1,211 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Data.Objects.DataClasses;
+using System.Linq;
+using System.Text;
+using System.Windows;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
+using GreenOClock.Model;
+using GreenOClock.Views;
+
+namespace GreenOClock.ViewModel
+{
+    public class CreateActivityViewModel : ViewModelBase
+    {
+        public RelayCommand CreateActivityCommand { get; set; }
+        public RelayCommand RemoveSelectedTagFromListBox { get; set; }
+        public RelayCommand AddSelectedTags { get; set; }
+
+<<<<<<< local
+        private EntityCollection<Tag> _unUsedActivitiesTags;
+        public EntityCollection<Tag> UnUsedActivitiesTags
+=======
+        private ObservableCollection<Tag> _unUsedActivitiesTags;
+        public ObservableCollection<Tag> UnUsedActivitiesTags
+>>>>>>> other
+        {
+            get { return _unUsedActivitiesTags; }
+            set
+            {
+                _unUsedActivitiesTags = value;
+                RaisePropertyChanged("UnUsedActivitiesTags");
+            }
+        }
+        private ObservableCollection<Tag> _usedActivitiesTags;
+        public ObservableCollection<Tag> UsedActivitiesTags
+        {
+            get { return _usedActivitiesTags; }
+            set 
+            { 
+                _usedActivitiesTags = value;
+                RaisePropertyChanged("UsedActivitiesTags");
+            }
+        }
+
+        private Tag _unUsedSellectedActivitiesTags;
+        public Tag UnUsedSellectedActivitiesTags
+        {
+            get { return _unUsedSellectedActivitiesTags; }
+            set
+            {
+                _unUsedSellectedActivitiesTags = value;
+                RaisePropertyChanged("UnUsedSellectedActivitiesTags");
+            }
+        }
+        private Tag _usedSellectedActivitiesTags;
+        public Tag UsedSellectedActivitiesTags
+        {
+            get { return _usedSellectedActivitiesTags; }
+            set
+            {
+                _usedSellectedActivitiesTags = value;
+                RaisePropertyChanged("UsedSellectedActivitiesTags");
+            }
+        }
+
+<<<<<<< local
+        private Activity _unUsedSellectedActivity;
+        public Activity UnUsedSelectedActivity
+        {
+            get { return _unUsedSellectedActivity; }
+            set
+            {
+                _unUsedSellectedActivity = value;
+                RaisePropertyChanged("UnUsedSellectedActivity");
+            }
+        }
+
+=======
+>>>>>>> other
+        private string _newActivityName;
+        public string NewActivityName
+        {
+            get { return _newActivityName; }
+            set
+            {
+                _newActivityName = value;
+                RaisePropertyChanged("NewActivityName");
+            }
+        }
+
+        //private void ConvertToObservableCollection()
+        //{
+        //    var users = DataLayer.Instance.UsersRepository;
+        //    if(users != null)
+        //    {
+        //        foreach (var tag in users.GetUsersTags(SessionData.CurrentUser))
+        //        {
+        //            UnUsedActivitiesTags.Add(tag);
+        //        }
+        //    }
+            
+        //}
+
+        private EntityCollection<Tag> ConvertToEntityCollection()
+        {
+            var entityTags = new EntityCollection<Tag>();
+            foreach (var tag in UsedActivitiesTags)
+            {
+                entityTags.Add(tag);
+            }
+            return entityTags;
+        }
+
+        public CreateActivityViewModel()
+        {
+<<<<<<< local
+            Messenger.Default.Register<LoadUserMessage>(this, Initialize);
+=======
+            LoginViewModel.InitializePropertiesEvent += Initialize;
+>>>>>>> other
+            //ConvertToObservableCollection();
+            CreateActivityCommand = new RelayCommand(CreateActivity);
+            RemoveSelectedTagFromListBox = new RelayCommand(RemoveTagFromList);
+            AddSelectedTags = new RelayCommand(AddTagToUsedList);
+        }
+
+<<<<<<< local
+        private void Initialize(LoadUserMessage message)
+=======
+        private void Initialize()
+>>>>>>> other
+        {
+<<<<<<< local
+            UnUsedActivitiesTags = SessionData.CurrentUser.Tags;
+        }
+=======
+            //ConvertToObservableCollection();
+>>>>>>> other
+
+<<<<<<< local
+        private void AddTagToUsedList()
+        {
+            MessageBox.Show(UnUsedSellectedActivitiesTags.Name);
+            MessageBox.Show("ASDWD");
+            var tagBeingMoved = UnUsedSellectedActivitiesTags;
+            UnUsedActivitiesTags.Remove(tagBeingMoved);
+            UsedActivitiesTags.Add(tagBeingMoved);
+        }
+
+        private void RemoveTagFromList()
+        {
+            MessageBox.Show(UsedSellectedActivitiesTags.Name);
+            var tagBeingMoved = UsedSellectedActivitiesTags;
+            UsedActivitiesTags.Remove(tagBeingMoved);
+            UnUsedActivitiesTags.Add(tagBeingMoved);
+
+=======
+>>>>>>> other
+        }
+
+        //private void AddTagToUsedList()
+        //{
+        //    var tagBeingMoved = CreateActivitiesView.UnUsedTags.SelectedItem;
+        //    UnUsedActivitiesTags.Remove(tagBeingMoved);
+        //    UsedActivitiesTags.Add(tagBeingMoved);
+        //}
+
+        //private void RemoveTagFromList()
+        //{
+        //    var tagBeingMoved = CreateActivitiesView.UsedTags.SelectedItem;
+        //    UsedActivitiesTags.Remove(tagBeingMoved);
+        //    UnUsedActivitiesTags.Add(tagBeingMoved);
+
+        //}
+
+        public void CreateActivity()
+        {
+            if (NewActivityName != null && UsedActivitiesTags.Count()>0)
+            {
+            var newActivity = new Activity
+                {
+                    Name = NewActivityName,
+                    Tags = ChangeToEntityCollection(UsedActivitiesTags)
+                };
+            DataLayer.Instance.ActivitiesRepository.AddActivity(newActivity);
+            }
+            else
+            {
+                MessageBox.Show("You need to enter a name before you can create an activity");
+            }
+        }
+
+        public EntityCollection<Tag> ChangeToEntityCollection(ObservableCollection<Tag> tags)
+        {
+            var newTags = new EntityCollection<Tag>();
+            foreach (var tag in tags)
+            {
+                newTags.Add(tag);
+            }
+            return newTags;
+        }
+
+        public void ClickAllActivities()
+        {
+            Messenger.Default.Send(new SwitchViewMessage { ShowControl = WindowViews.AddActivities });
+        }
+    }
+}

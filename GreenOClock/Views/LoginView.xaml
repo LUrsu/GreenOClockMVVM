@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="GreenOClock.Views.LoginView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:vm="clr-namespace:GreenOClock.ViewModel" xmlns:ff="clr-namespace:GreenOClock" mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="500">
+    <UserControl.Resources>
+        <vm:LoginViewModel x:Key="LoginVm" d:IsDataSource="True"/>
+    </UserControl.Resources>
+
+    <Grid DataContext="{Binding Source={StaticResource LoginVm}}" >
+        <Grid.Background>
+            <ImageBrush ImageSource="plain-green-138.jpg"/>
+        </Grid.Background>
+        <!--binding example
+        <Label Content={Binding PROPERTY_NAME}
+        
+        -->
+        <StackPanel Height="auto" HorizontalAlignment="Left" Margin="100,200,0,0" Name="stackPanel2" VerticalAlignment="Top" Width="289">
+            <WrapPanel Height="auto" Name="wrapPanel1" Width="289" Background="#FF5E7C2D">
+                <Label Content="User Name" Height="28" Name="label1" Foreground="#FFCEC645" Margin="10" />
+                <TextBox Height="23" Name="textBox1" Width="180" Background="Honeydew" Margin="10" Text="{Binding UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <Label Content="Pass Word" Height="28" Name="label2" Width="68" Foreground="#FFCEC645" Margin="10" />
+                <TextBox Height="23" Name="textBox2" Width="181" Background="Honeydew" Margin="10" Text="{Binding PassWord, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <!--<PasswordBox Height="23" x:Name="PasswordBox" Width="178" ff:PasswordBoxAssistant.BindPassword="True" ff:PasswordBoxAssistant.BoundPassword="{Binding Path=PassWord, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>-->
+            </WrapPanel>
+            <StackPanel Height="auto" Name="stackPanel1" Width="auto" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Background="#FF91C239" Foreground="#FFFFEC18" Content="Register User" Height="23" Name="button2" Width="86" Command="{Binding RegisterUserCommand}" />
+                <Button Background="#FF91C239" Foreground="#FFFFEC18" Content="Login" Height="23" Name="button1" Width="86" Command="{Binding LoginCommand}" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

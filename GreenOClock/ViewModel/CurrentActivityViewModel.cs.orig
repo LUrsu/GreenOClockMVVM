@@ -1,0 +1,108 @@
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Windows;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
+using GreenOClock.Model;
+
+namespace GreenOClock.ViewModel
+{
+    class CurrentActivityViewModel : ViewModelBase
+    {
+        private RelayCommand StartTimerCommand { get; set; }
+        private RelayCommand StopTimerCommand { get; set; }
+        private RelayCommand PauseTimerCommand { get; set; }
+        
+        
+
+        public void method(object sender, EventArgs e)
+        {
+            MessageBox.Show("hi");
+        }
+
+        public CurrentActivityViewModel()
+        {
+            ActiveActivity = SessionData.CurrentActiveActivity;
+            ActiveActivityName = ActiveActivity.ActivityName;
+            ConvertToObservableCollection();
+            //TODO initialize ActiveActivity to the user's activity
+            //where ( Active == True )
+            StopTimerCommand = new RelayCommand(StopTimer);
+            StartTimerCommand = new RelayCommand(StartTimer);
+            PauseTimerCommand = new RelayCommand(PauseTimer);
+        }
+
+        private void ConvertToObservableCollection()
+        {
+            foreach (var activity in SessionData.UsersActivities)
+            {
+                foreach (var usersActivityTag in activity.Tags)
+                {
+                    UsersActivityTags.Add(usersActivityTag);
+                }
+            }
+        }
+
+        private void PauseTimer()
+        {
+            //TODO stop ActiveActivities timer from incramenting
+        }
+
+        private void StopTimer()
+        {
+
+        }
+
+        public void StartTimer()
+        {
+            //Messenger.Default.Send(new Message);
+        }
+
+        private ObservableCollection<Tag> _usersActivityTags;
+        public ObservableCollection<Tag> UsersActivityTags
+        {
+            get { return _usersActivityTags; }
+            set
+            {
+                _usersActivityTags = value;
+                RaisePropertyChanged("UserActivities");
+            }
+        }
+
+        private Tag _selectedTag;
+        public Tag SelectedTag
+        {
+            get { return _selectedTag; }
+            set
+            {
+                _selectedTag = value;
+                RaisePropertyChanged("SelectedTags");
+            }
+        }
+
+        private Activity _activeActivity;
+        public Activity ActiveActivity
+        {
+            get { return _activeActivity; }
+            set
+            {
+                _activeActivity = value;
+                RaisePropertyChanged("ActiveActivity");
+            }
+        }
+
+        private string _activeActivityName;
+        public string ActiveActivityName
+        {
+            get { return _activeActivityName; }
+            set
+            {
+                _activeActivityName = ActiveActivity.ActivityName;
+                RaisePropertyChanged("ActiveActivityName");
+            }
+        }
+
+        
+    }
+}

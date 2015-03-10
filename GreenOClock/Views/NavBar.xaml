@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="GreenOClock.Views.NavBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:GreenOClock.ViewModel" mc:Ignorable="d" 
+             d:DesignHeight="30" d:DesignWidth="400">
+    <UserControl.Resources>
+        <vm:NavBarViewModel x:Key="NavBarViewModel" d:IsDataSource="true"/>
+    </UserControl.Resources>
+    <Grid DataContext="{Binding Source={StaticResource NavBarViewModel}}">
+        <StackPanel Orientation="Horizontal">
+            <Button Content="Home" Width="100" Command="{Binding HomeCommand}"/>
+            <Button Content="Active Activity" Width="100" Command="{Binding ActiveCommand}"/>
+            <Button Content="Manage Activities" Width="100" Command="{Binding ManageCommand}"/>
+            <Button Content="Manage Tags" Width="100" Command="{Binding ManageTagsCommand}"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

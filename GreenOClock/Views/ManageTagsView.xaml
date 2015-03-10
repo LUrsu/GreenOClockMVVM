@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="GreenOClock.Views.ManageTagsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:GreenOClock.ViewModel" mc:Ignorable="d"
+             d:DesignHeight="500" d:DesignWidth="500">
+    <UserControl.Resources>
+        <vm:ManageTagsViewModel x:Key="ViewModel" d:IsDataSource="True"/>
+        <vm:SelectedTagViewConverter x:Key="SelectedTagConverter"/>
+        <vm:TagConverter x:Key="TagViewConverter" />
+    </UserControl.Resources>
+    
+    <Grid DataContext="{Binding Source={StaticResource ViewModel}}">
+        <Grid.Background>
+            <ImageBrush ImageSource="plain-green-138.jpg"/>
+        </Grid.Background>
+        
+          <Grid VerticalAlignment="Stretch"
+            HorizontalAlignment="Center">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Horizontal">
+                <TextBox Text="{Binding TagName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                     HorizontalAlignment="Stretch" TextAlignment="Right" Width="300" Background="Honeydew"/>
+                <Button Background="#FF91C239" Foreground="#FFFFEC18" Content="Add new Tag" Command="{Binding CreateTagCommand}" Width="100"/>
+            </StackPanel>
+
+            <ListBox Name="Tags" Grid.Row="1" SelectionMode="Single" Background="#FF5E7C2D"
+            ItemsSource="{Binding ActivityTags, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource TagViewConverter}}" 
+                     SelectedItem="{Binding SelectedTag, Mode=TwoWay, Converter={StaticResource SelectedTagConverter}}"
+
+        HorizontalContentAlignment="Stretch"/>
+
+            <Button Background="#FF91C239" Foreground="#FFFFEC18" Content="Remove Selected Tag" Grid.Row="2" Command="{Binding RemoveTagCommand}"/>
+        </Grid>
+
+    </Grid>
+</UserControl>
+

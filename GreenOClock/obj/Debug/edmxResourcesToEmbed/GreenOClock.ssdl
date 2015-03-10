@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="GreenOClockModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="GreenOClockModelStoreContainer">
+    <EntitySet Name="Activity" EntityType="GreenOClockModel.Store.Activity" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ActivityTags" EntityType="GreenOClockModel.Store.ActivityTags" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="sysdiagrams" EntityType="GreenOClockModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Tag" EntityType="GreenOClockModel.Store.Tag" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserActivities" EntityType="GreenOClockModel.Store.UserActivities" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users" EntityType="GreenOClockModel.Store.Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserTags" EntityType="GreenOClockModel.Store.UserTags" store:Type="Tables" store:Schema="dbo" store:Name="UserTags">
+      <DefiningQuery>SELECT 
+      [UserTags].[UserId] AS [UserId], 
+      [UserTags].[TagId] AS [TagId]
+      FROM [dbo].[UserTags] AS [UserTags]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK__ActivityT__Activ__498EEC8D" Association="GreenOClockModel.Store.FK__ActivityT__Activ__498EEC8D">
+      <End Role="Activity" EntitySet="Activity" />
+      <End Role="ActivityTags" EntitySet="ActivityTags" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ActivityT__TagId__4A8310C6" Association="GreenOClockModel.Store.FK__ActivityT__TagId__4A8310C6">
+      <End Role="Tag" EntitySet="Tag" />
+      <End Role="ActivityTags" EntitySet="ActivityTags" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UserActiv__Activ__46B27FE2" Association="GreenOClockModel.Store.FK__UserActiv__Activ__46B27FE2">
+      <End Role="Activity" EntitySet="Activity" />
+      <End Role="UserActivities" EntitySet="UserActivities" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UserActiv__UserI__45BE5BA9" Association="GreenOClockModel.Store.FK__UserActiv__UserI__45BE5BA9">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="UserActivities" EntitySet="UserActivities" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UserTags__TagId__42E1EEFE" Association="GreenOClockModel.Store.FK__UserTags__TagId__42E1EEFE">
+      <End Role="Tag" EntitySet="Tag" />
+      <End Role="UserTags" EntitySet="UserTags" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UserTags__UserId__4E53A1AA" Association="GreenOClockModel.Store.FK__UserTags__UserId__4E53A1AA">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="UserTags" EntitySet="UserTags" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Activity">
+    <Key>
+      <PropertyRef Name="ActivityId" />
+    </Key>
+    <Property Name="ActivityId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="StartTime" Type="datetime" />
+    <Property Name="EndTime" Type="datetime" />
+    <Property Name="TotalTime" Type="int" />
+  </EntityType>
+  <EntityType Name="ActivityTags">
+    <Key>
+      <PropertyRef Name="ActivityId" />
+      <PropertyRef Name="TagId" />
+    </Key>
+    <Property Name="ActivityId" Type="int" Nullable="false" />
+    <Property Name="TagId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Tag">
+    <Key>
+      <PropertyRef Name="TagId" />
+    </Key>
+    <Property Name="TagId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="varchar" Nullable="false" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="UserActivities">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="ActivityId" />
+    </Key>
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="ActivityId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="PassWord" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="Email" Type="varchar" MaxLength="40" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'GreenOClock.dbo.UserTags' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="UserTags">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="TagId" />
+    </Key>
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="TagId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__ActivityT__Activ__498EEC8D">
+    <End Role="Activity" Type="GreenOClockModel.Store.Activity" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ActivityTags" Type="GreenOClockModel.Store.ActivityTags" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Activity">
+        <PropertyRef Name="ActivityId" />
+      </Principal>
+      <Dependent Role="ActivityTags">
+        <PropertyRef Name="ActivityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ActivityT__TagId__4A8310C6">
+    <End Role="Tag" Type="GreenOClockModel.Store.Tag" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ActivityTags" Type="GreenOClockModel.Store.ActivityTags" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tag">
+        <PropertyRef Name="TagId" />
+      </Principal>
+      <Dependent Role="ActivityTags">
+        <PropertyRef Name="TagId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UserActiv__Activ__46B27FE2">
+    <End Role="Activity" Type="GreenOClockModel.Store.Activity" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UserActivities" Type="GreenOClockModel.Store.UserActivities" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Activity">
+        <PropertyRef Name="ActivityId" />
+      </Principal>
+      <Dependent Role="UserActivities">
+        <PropertyRef Name="ActivityId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UserActiv__UserI__45BE5BA9">
+    <End Role="Users" Type="GreenOClockModel.Store.Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UserActivities" Type="GreenOClockModel.Store.UserActivities" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserActivities">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UserTags__TagId__42E1EEFE">
+    <End Role="Tag" Type="GreenOClockModel.Store.Tag" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UserTags" Type="GreenOClockModel.Store.UserTags" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tag">
+        <PropertyRef Name="TagId" />
+      </Principal>
+      <Dependent Role="UserTags">
+        <PropertyRef Name="TagId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UserTags__UserId__4E53A1AA">
+    <End Role="Users" Type="GreenOClockModel.Store.Users" Multiplicity="1" />
+    <End Role="UserTags" Type="GreenOClockModel.Store.UserTags" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserTags">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

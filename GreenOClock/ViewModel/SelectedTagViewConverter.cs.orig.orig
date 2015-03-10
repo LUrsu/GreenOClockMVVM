@@ -1,0 +1,56 @@
+﻿using System;
+<<<<<<< local
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+=======
+>>>>>>> other
+using System.Globalization;
+<<<<<<< local
+using System.Linq;
+using System.Text;
+using System.Windows;
+=======
+>>>>>>> other
+using System.Windows.Data;
+using GreenOClock.Views;
+
+namespace GreenOClock.ViewModel
+{
+    [ValueConversion(typeof(Tag), typeof(TagView))]
+    class SelectedTagViewConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var tagDisplayObject = new TagView();
+
+            if(value == null)
+            {
+                return tagDisplayObject;
+            }
+
+            var tagListItem = (Tag)value;
+            tagDisplayObject.TagNameBox.Content = tagListItem.TagName;
+
+            return tagDisplayObject;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var tagListItem = new Tag();
+
+            if (value == null)
+            {
+                return tagListItem;
+            }
+
+            var tagDisplayObject = (TagView)value;
+<<<<<<< local
+=======
+
+>>>>>>> other
+            tagListItem.TagName = tagDisplayObject.TagNameBox.Content.ToString();
+
+            return tagListItem;
+        }
+    }
+}

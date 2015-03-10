@@ -1,0 +1,203 @@
+﻿<UserControl x:Class="GreenOClock.Views.CreateActivitiesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+<<<<<<< local
+             xmlns:vm="clr-namespace:GreenOClock.ViewModel" xmlns:DataConverters="clr-namespace:GreenOClock.ViewModel.DataConverters" mc:Ignorable="d"
+=======
+             xmlns:vm="clr-namespace:GreenOClock.ViewModel"
+             xmlns:vs="clr-namespace:GreenOClock.Views" xmlns:DataConverters="clr-namespace:GreenOClock.ViewModel.DataConverters" mc:Ignorable="d"
+>>>>>>> other
+             d:DesignHeight="500" d:DesignWidth="500">
+    <UserControl.Resources>
+        <vm:CreateActivityViewModel x:Key="ViewModel" d:IsDataSource="True"/>
+<<<<<<< local
+        <vm:TagConverter x:Key="TagToViewsConverter"/>
+        <vm:SelectedTagViewConverter x:Key="SelectedTagToViewConverter"/>
+=======
+        <DataConverters:ActivityConverter x:Key="ActivitiesToViewsConverter"/>
+        <vm:SelectedActivityViewConverter x:Key="ActivityToViewConverter"/>
+>>>>>>> other
+    </UserControl.Resources>
+
+<<<<<<< local
+    <Grid DataContext="{Binding Source={StaticResource ViewModel}}">
+        <Grid.Background>
+            <ImageBrush ImageSource="plain-green-138.jpg"/>
+        </Grid.Background>
+        
+        <Grid VerticalAlignment="Top" Height="auto"
+=======
+    <Grid DataContext="{Binding Source={StaticResource ViewModel}}"
+            VerticalAlignment="Top" Height="auto"
+>>>>>>> other
+            HorizontalAlignment="Center">
+<<<<<<< local
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" MinWidth="500"/>
+            </Grid.ColumnDefinitions>
+=======
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" MinWidth="500"/>
+        </Grid.ColumnDefinitions>
+>>>>>>> other
+
+<<<<<<< local
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="30"/>
+=======
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+
+        </Grid.RowDefinitions>
+>>>>>>> other
+
+<<<<<<< local
+            </Grid.RowDefinitions>
+=======
+        <StackPanel Orientation="Vertical" Grid.Row="0" HorizontalAlignment="Stretch" Background="LightGray">
+            <TextBlock Text="1. Name your new activity" Background="Green" Foreground="White" FontWeight="Bold" Padding="5"/>
+            <TextBox Text="{Binding NewActivityName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Margin="5"/>
+        </StackPanel>
+>>>>>>> other
+
+<<<<<<< local
+            <StackPanel Orientation="Vertical" Grid.Row="0" HorizontalAlignment="Stretch" Background="LightGray">
+                <TextBlock Text="1. Name your new activity" Background="Green" Foreground="White" FontWeight="Bold" Padding="5"/>
+                <TextBox Text="{Binding NewActivityName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                     Margin="5" Background="Honeydew"/>
+            </StackPanel>
+=======
+        <StackPanel Orientation="Vertical" Grid.Row="1" VerticalAlignment="Stretch">
+>>>>>>> other
+
+<<<<<<< local
+            <StackPanel Orientation="Vertical" Grid.Row="1" VerticalAlignment="Stretch">
+=======
+            <!-- start grid 1 -->
+            <Grid Background="LightGray">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+>>>>>>> other
+
+<<<<<<< local
+                <!-- start grid 1 -->
+                <Grid Background="LightGray">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- These are the two listboxes for the activity's tags including title and button -->
+                    <TextBlock VerticalAlignment="Center" Text="2. Add tags that describe this activity" Grid.ColumnSpan="2" 
+=======
+                <!-- These are the two listboxes for the activity's tags including title and button -->
+                <TextBlock VerticalAlignment="Center" Text="2. Add tags that describe this activity" Grid.ColumnSpan="2" 
+>>>>>>> other
+                           Padding="5" Background="Green" Foreground="White" FontWeight="Bold"/>
+
+<<<<<<< local
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="1">
+                        <Label Content="Your Remaining Tags" HorizontalAlignment="Center" FontSize="18" FontFamily="Calibri"/>
+=======
+                <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="1">
+                    <Label Content="Your Remaining Tags" HorizontalAlignment="Center" FontSize="18" FontFamily="Calibri"/>
+>>>>>>> other
+
+<<<<<<< local
+                        <ListBox x:Name="UnusedTagsListBox" HorizontalContentAlignment="Stretch" SelectionMode="Single"
+                        VerticalAlignment="Stretch" Height="240" Grid.Column="0" Margin="5"
+=======
+                    <ListBox x:Name="UnusedTagsListBox" HorizontalContentAlignment="Stretch" SelectionMode="Single"
+                        VerticalAlignment="Stretch" Height="310" Grid.Column="0" Margin="5"
+>>>>>>> other
+                        ItemsSource="{Binding UnUsedActivitiesTags, UpdateSourceTrigger=PropertyChanged, 
+<<<<<<< local
+                            Converter={StaticResource TagToViewsConverter}, Mode=OneWay}"
+                        SelectedItem="{Binding UnUsedSelectedActivityTags, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
+                            Converter={StaticResource SelectedTagToViewConverter}}" Background="#FF5E7C2D"/>
+=======
+                            Converter={StaticResource ActivitiesToViewsConverter}, Mode=OneWay}"
+                        SelectedItem="{Binding SelectedActivity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
+                            Converter={StaticResource ActivityToViewConverter}}"/>
+>>>>>>> other
+
+
+<<<<<<< local
+                        <Button Content="Add to Activity" Height="30" VerticalAlignment="Top" Grid.Column="0" Background="#FF91C239" Foreground="#FFFFEC18"
+                                Command="{Binding AddSelectedTags}"/>
+                    </StackPanel>
+=======
+                    <Button Content="Add to Activity" Height="30" VerticalAlignment="Top" Grid.Column="0" />
+                </StackPanel>
+>>>>>>> other
+
+<<<<<<< local
+                    <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1">
+                        <Label Content="New Activity's Tags" HorizontalAlignment="Center" FontSize="18" FontFamily="Calibri"/>
+=======
+                <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1">
+                    <Label Content="New Activity's Tags" HorizontalAlignment="Center" FontSize="18" FontFamily="Calibri"/>
+>>>>>>> other
+
+<<<<<<< local
+                        <ListBox x:Name="UsedTagsListBox" HorizontalContentAlignment="Stretch" SelectionMode="Single"
+                        VerticalAlignment="Stretch" Height="240" Grid.Column="0" Margin="5"
+=======
+                    <ListBox x:Name="UsedTagsListBox" HorizontalContentAlignment="Stretch" SelectionMode="Single"
+                        VerticalAlignment="Stretch" Height="310" Grid.Column="0" Margin="5"
+>>>>>>> other
+                        ItemsSource="{Binding UsedActivitiesTags, UpdateSourceTrigger=PropertyChanged, 
+<<<<<<< local
+                            Converter={StaticResource TagToViewsConverter}, Mode=OneWay}"
+                        SelectedItem="{Binding UsedSellectedActivitiesTags, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
+                            Converter={StaticResource SelectedTagToViewConverter}}" Background="#FF5E7C2D"/>
+=======
+                            Converter={StaticResource ActivitiesToViewsConverter}, Mode=OneWay}"
+                        SelectedItem="{Binding UsedSelectedActivity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
+                            Converter={StaticResource ActivityToViewConverter}}"/>
+>>>>>>> other
+
+<<<<<<< local
+                        <Button Content="Remove from Activity" Height="30" Grid.Column="1" Background="#FF91C239" Foreground="#FFFFEC18"
+                                Command="{Binding RemoveSelectedTagFromListBox}"/>
+                    </StackPanel>
+                    <!-- End listboxes -->
+                </Grid>
+            </StackPanel>
+=======
+                    <Button Content="Remove from Activity" Height="30" Grid.Column="1"/>
+                </StackPanel>
+                <!-- End listboxes -->
+            </Grid>
+        </StackPanel>
+>>>>>>> other
+
+<<<<<<< local
+            <Button Content="Create New Activity" Command="{Binding CreateActivityCommand}" Height="auto" Grid.Row="2" 
+                Background="#FF91C239" Foreground="#FFFFEC18" FontWeight="Bold"/>
+        </Grid>
+
+        
+=======
+        <Button Content="Create New Activity" Command="{Binding RemoveTagCommand}" Height="auto" Grid.Row="2" 
+                Background="Green" Foreground="White" FontWeight="Bold"/>
+>>>>>>> other
+    </Grid>
+</UserControl>

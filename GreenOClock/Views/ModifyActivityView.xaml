@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="GreenOClock.Views.ModifyActivityView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:GreenOClock.ViewModel" mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="600">
+    <UserControl.Resources>
+        <vm:ModifyActivityViewModel x:Key="ModifyActivityViewModel" d:IsDataSource="True"/>
+    </UserControl.Resources>
+
+    <Grid DataContext="{Binding Source={StaticResource ModifyActivityViewModel}}">
+        <StackPanel Orientation="Vertical" Margin="20,20" VerticalAlignment="Stretch">
+            <TextBlock Text="ModifyActivity not really " FontSize="26"/>
+
+            <Label Content="Name:"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="100"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox HorizontalAlignment="Stretch" Name="NameBox" Height="23" Grid.Column="0" Text="{Binding TagName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Content="Create Tag" Width="100" Grid.Column="1" Command="{Binding ViewAllActivitiesCommand}"/>
+            </Grid>
+
+            <Label Content="Add Tags:"/>
+            <ListBox HorizontalAlignment="Stretch" Height="300" Width="460" ItemsSource="{Binding ActivityTags, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+        </StackPanel>
+        <Button Content="Remove Selected Tags" VerticalAlignment="Bottom"/>
+    </Grid>
+</UserControl>

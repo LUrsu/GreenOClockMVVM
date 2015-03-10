@@ -1,0 +1,139 @@
+﻿using System.Collections;
+using System.Collections.ObjectModel;
+using System.Data.Objects.DataClasses;
+using System.Linq;
+using System.Windows;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
+using GreenOClock.Model;
+using GreenOClock.Views;
+
+namespace GreenOClock.ViewModel
+{
+    public class ManageTagsViewModel : ViewModelBase
+    {
+        public RelayCommand CreateTagCommand { get; set; }
+        public RelayCommand RemoveTagCommand { get; set; }
+        public RelayCommand UpdateSelectedTags { get; set; }
+
+        public ManageTagsViewModel()
+        {
+            TagName = string.Empty;
+<<<<<<< local
+            //ActivityTags = SessionData.UsersTags;
+            ActivityTags = new ObservableCollection<Tag>();
+            //ActivityTags = DBHelper.();
+=======
+            //ActivityTags = SessionData.UsersTags.;
+
+>>>>>>> other
+            ConvertToObservableCollection();
+            ActivityTags = new ObservableCollection<Tag>();
+
+            CreateTagCommand = new RelayCommand(AddNewTag);
+            RemoveTagCommand = new RelayCommand(RemoveSelectedTag);
+        }
+
+        private void ConvertToObservableCollection()
+        {
+            if(SessionData.UsersTags != null)
+            {
+                foreach (var tag in SessionData.UsersTags)
+                {
+                    ActivityTags.Add(tag);
+                }
+            }
+        }
+
+        public void AddNewTag()
+        {
+            
+            if (NameIsValid(TagName))
+            {
+                var newTag = new Tag {TagName = TagName};
+                ActivityTags.Add(newTag);
+                TagName = string.Empty;
+                RaisePropertyChanged("ActivityTags");
+                
+                //TODO add a tag to the Data base
+            }
+            else
+            {
+                MessageBox.Show("You need to enter a name before you can create a tag");
+            }
+        }
+
+        public void RemoveSelectedTag()
+        {
+            if( SelectedTag != null )
+            {
+                for (var i = 0; i < ActivityTags.Count; i++)
+                {
+                    var removedTag = ActivityTags[i];
+                    if (removedTag.TagName == SelectedTag.TagName)
+                        ActivityTags.Remove(removedTag);
+                }
+                RaisePropertyChanged("ActivityTags");
+                //TODO delete from data base
+            }
+            else
+            {
+                MessageBox.Show("You need to select a tag to remove");
+            }
+        }
+
+        private string _tagName;
+        public string TagName
+        {
+            get { return _tagName; }
+            set 
+            { 
+                _tagName = value;
+                RaisePropertyChanged("TagName");
+            }
+        }
+
+        private ObservableCollection<Tag> _activityTags;
+        public ObservableCollection<Tag> ActivityTags
+        {
+            get { return _activityTags; }
+            set
+            {
+                _activityTags = value;
+                RaisePropertyChanged("ActivityTags");
+            }
+        }
+
+        private Tag _selectedTag;
+        public Tag SelectedTag
+        {
+            get { return _selectedTag; }
+            set
+            {
+                _selectedTag = value;
+                RaisePropertyChanged("SelectedTag");
+            }
+        }
+
+        public bool NameIsValid(string tagname)
+        {
+            bool iSValid = true;
+
+            foreach (var tag in ActivityTags)
+            {
+                if (tagname==string.Empty || tag.TagName == tagname)
+                {
+                    iSValid = false;
+                }
+            }
+
+            return iSValid;
+        }
+
+        public void ClickAllActivities()
+        {
+            Messenger.Default.Send(new SwitchViewMessage { ShowControl = WindowViews.AddActivities });
+        }
+    }
+}

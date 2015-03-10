@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="GreenOClock.Views.HomePageView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:vm="clr-namespace:GreenOClock.ViewModel" xmlns:dc="clr-namespace:GreenOClock.ViewModel.DataConverters" mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="600">
+    <UserControl.Resources>
+        <vm:HomePageViewModel x:Key="HomePageVm" d:IsDataSource="True"/>
+        <dc:ActivityConverter x:Key="activityConverter"/>
+        <dc:SelectedActivityViewConverter x:Key="selectedActivityConverter"/>
+    </UserControl.Resources>
+    <Grid DataContext="{Binding Source={StaticResource HomePageVm}}">
+        <StackPanel Orientation="Vertical" Margin="20,20" VerticalAlignment="Stretch">
+            <TextBlock Text="Home" FontSize="26"/>
+
+            <Label Content="Upcoming Activities:"/>
+            <ListBox HorizontalAlignment="Stretch" Height="374" Width="462" SelectionMode="Multiple" ItemsSource="{Binding UpcomingActivities, Converter={StaticResource activityConverter}, UpdateSourceTrigger=PropertyChanged}"
+                         SelectedItem="{Binding SelectedActivity, Mode=TwoWay, Converter={StaticResource selectedActivityConverter}}"/>
+            
+        </StackPanel>
+        <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" Margin="20">
+            
+        </StackPanel>
+        
+    </Grid>
+</UserControl>
+
